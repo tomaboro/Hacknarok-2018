@@ -3,14 +3,10 @@ package pl.hacknarok.positivedevs.runit.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
-import pl.hacknarok.positivedevs.runit.User;
-import pl.hacknarok.positivedevs.runit.UserRepository;
-
-import java.util.List;
+import pl.hacknarok.positivedevs.runit.entity.User;
+import pl.hacknarok.positivedevs.runit.repository.UserRepository;
 
 @RestController
 @RequestMapping("user")
@@ -20,33 +16,29 @@ public class UserController {
     @Autowired
     private UserRepository users;
 
-    @RequestMapping("test")
-    public String test() {
-        log.info("Test");
-        return "OK";
+    @RequestMapping(value = "create", method = RequestMethod.PUT)
+    public String createUser(@RequestBody User user){
+        if(users.checkIfUserExists(user.name))
+            return "User with that username already exists!";
+        else {
+            users.addUser(user.name,user.password);
+            return "User created successfully";
+        }
     }
 
-    @RequestMapping("createTable")
-    public String createTable(){
-        users.createTable();
-        return "Table created";
+    @RequestMapping(value = "login", method = RequestMethod.POST)
+    public String loginUser(@RequestBody User user){
+        String uuid = users.login(user.name,user.password);
+        if(uuid == null)
+            return null;
+        else {
+            return uuid;
+        }
     }
 
-    @RequestMapping(value = "createUser", method = RequestMethod.PUT)
-    public String createUser(@RequestParam String username, @RequestParam String password){
-
-        return "User created successfully";
-    }
-    
-    @RequestMapping("user")
-    public User getUser(@RequestParam("id") long id) {
-        log.info("Get user");
-        return users.getUser(id);
+    @RequestMapping(value = "logout", method = RequestMethod.POST)
+    public void logoutUser(@RequestBody User user){
+        users.logout(user.token);
     }
 
-    @RequestMapping("users")
-    public List<User> getUsers(@RequestParam("ids") long[] ids) {
-        log.info("Get users");
-        return users.getUsers(ids);
-    }
 }

@@ -55,8 +55,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>com.vaadin.external.google</groupId>
+            <artifactId>android-json</artifactId>
+            <version>RELEASE</version>
+        </dependency>
 
-	</dependencies>
+    </dependencies>
 
 	<build>
 		<plugins>
