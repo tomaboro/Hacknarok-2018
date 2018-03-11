@@ -27,7 +27,7 @@ import java.util.List;
 public class AppController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    @RequestMapping(value = "addAccident", method = RequestMethod.PUT)
+    @RequestMapping(value = "addaccident", method = RequestMethod.PUT)
     public void addAccident(@RequestBody Notification notification) throws JSONException {
         final String uri = "https://hacknarock.release.commandcentral.com";
         RestTemplate restTemplate = new RestTemplate();
@@ -42,7 +42,7 @@ public class AppController {
         restTemplate.exchange(uri, HttpMethod.PUT, entity, String.class);
     }
 
-    @RequestMapping(value = "addLost", method = RequestMethod.PUT)
+    @RequestMapping(value = "addlost", method = RequestMethod.PUT)
     public void addLost(@RequestBody Notification notification) throws JSONException {
         final String uri = "https://hacknarock.release.commandcentral.com";
         RestTemplate restTemplate = new RestTemplate();

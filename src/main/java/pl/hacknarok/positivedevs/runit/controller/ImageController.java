@@ -28,7 +28,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("image")
@@ -39,7 +41,8 @@ public class ImageController {
     public void add(@RequestBody Image image) throws JSONException { //TODO INNE BODY!
         System.out.println("/POST request with " + image.toString());
         // save Image to C:\\server folder
-        String path = "C:\\Users\\Krzysiek\\Documents\\Studia\\hacknarock2018\\Hacknarok-2018\\target\\classes\\images\\" + image.getName();
+        String uuid = UUID.randomUUID().toString() + ".png";
+        String path = "C:\\Users\\Krzysiek\\Documents\\Studia\\hacknarock2018\\Hacknarok-2018\\target\\classes\\images\\" + uuid;
         UtilBase64Image.decoder(image.getData(), path);
 
         final String uri = "https://hacknarock.release.commandcentral.com";
@@ -49,37 +52,16 @@ public class ImageController {
         headers.add("Content-Type","application/json");
         headers.add("Authorization","Basic MFlrY2htcllOM2NxMXpM");
 
-        String jsonToSend = MotorolaJSONFactory.createImageJSON(image.getName(),image.getLatitude(),image.getLongitude(),"http://53eabf09.ngrok.io/image/get/" + image.getName());
+        String jsonToSend = MotorolaJSONFactory.createImageJSON(uuid, image.getLatitude(),image.getLongitude(),"http://53eabf09.ngrok.io/image/get?name=" + uuid);
         HttpEntity<String> entity = new HttpEntity<>(jsonToSend, headers);
 
         restTemplate.exchange(uri, HttpMethod.PUT, entity, String.class);
     }
 
     @ResponseBody
-    @RequestMapping(value = "/get", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+    @RequestMapping(value = "/get", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
     public  byte[] get(@RequestParam("name") String name) throws IOException {
-        System.out.println(name);
-
         InputStream in = getClass().getResourceAsStream("/images/"+name);
-
-
-
-
-       // System.out.println(System.getProperty(in.));
-        //return IOUtils;
-        //org.apache.commons.logging.
         return IOUtils.toByteArray(in);
-/*
-        System.out.println(String.format("/GET info: imageName = %s", name));
-        String imagePath = "C:\\RunIT\\" + name;
-        String imageBase64 = UtilBase64Image.encoder(imagePath);
-
-        if(imageBase64 != null){
-            Image image = new Image(name, imageBase64);
-            //return image;
-            //InputStream in = servletContext.getResourceAsStream("/images/no_image.jpg");
-            //return IOUtils.toByteArray(in);
-        }
-        return null;*/
     }
 }

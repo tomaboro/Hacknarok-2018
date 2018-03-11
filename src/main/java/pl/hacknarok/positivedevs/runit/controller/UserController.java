@@ -44,7 +44,7 @@ public class UserController {
         users.logout(user.token);
     }
 
-    @RequestMapping(value = "updatePosition", method = RequestMethod.POST)
+    @RequestMapping(value = "updateposition", method = RequestMethod.POST)
     public void updatePosition(@RequestBody User user) throws JSONException {
         users.updatePosition(user);
     }

@@ -72,7 +72,7 @@ public class MotorolaJSONFactory {
         location.put("longitude", longitude);
         header.put("location", location);
 
-        header.put("detailedDescription", "Image sent from RunIT App");
+        header.put("detailedDescription", "Image sent from RunIT app");
 
         JSONObject icon = new JSONObject();
         icon.put("url", "MsiIcon://ic_camera_still");
@@ -89,7 +89,7 @@ public class MotorolaJSONFactory {
         JSONArray attachments = new JSONArray();
         JSONObject singleAttachment = new JSONObject();
         singleAttachment.put("name", id);
-        singleAttachment.put("contentType", "img/png");
+        singleAttachment.put("contentType", "img/jpeg");
         singleAttachment.put("url", imageUrl);
         attachments.put(singleAttachment);
         header.put("attachments", attachments);
@@ -113,7 +113,7 @@ public class MotorolaJSONFactory {
         location.put("longitude", longitude);
         header.put("location", location);
 
-        header.put("detailedDescription", "Accident reported by RunIT app");
+        header.put("detailedDescription", "Accident reported through RunIT app by user" + id);
 
         JSONObject icon = new JSONObject();
         icon.put("url", "MsiIcon://ic_event_alert_high");
@@ -144,7 +144,7 @@ public class MotorolaJSONFactory {
         location.put("longitude", longitude);
         header.put("location", location);
 
-        header.put("detailedDescription", "Lost reported by RunIT app");
+        header.put("detailedDescription", "Lost user "+ id +"  reported through RunIT app");
 
         JSONObject icon = new JSONObject();
         icon.put("url", "MsiIcon://ic_incident_pending");
@@ -163,7 +163,7 @@ public class MotorolaJSONFactory {
     private static JSONObject createEventHeaderUser(String id, double latitude, double longitude) throws JSONException {
         JSONObject header = new JSONObject();
         header.put("id", id);
-        header.put("label", "runner");
+        header.put("label", "runner-"+id);
         Date date = new Date(System.currentTimeMillis());
         Instant instant = date.toInstant();
         LocalDateTime ldt = instant.atOffset(ZoneOffset.UTC).toLocalDateTime();
@@ -175,7 +175,7 @@ public class MotorolaJSONFactory {
         location.put("longitude", longitude);
         header.put("location", location);
 
-        header.put("detailedDescription", "Image sent from RunIT App");
+        header.put("detailedDescription", "Current position of Runner "+ id);
 
         JSONObject icon = new JSONObject();
         icon.put("url", "MsiIcon://ic_action_onfoot");
