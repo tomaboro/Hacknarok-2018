@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/menu_1">
+        <item
+            android:id="@+id/nav_info"
+            android:icon="@android:drawable/ic_dialog_info"
+            android:title="@string/nav_event_info" />
+        <item
+            android:id="@+id/nav_select_run"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/nav_event_picker" />
+        <item
+            android:id="@+id/nav_report"
+            android:icon="@android:drawable/stat_sys_warning"
+            android:title="@string/nav_event_reporter" />
+
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/menu_2">
+        <item
+            android:id="@+id/nav_map"
+            android:icon="@android:drawable/ic_dialog_map"
+            android:title="@string/nav_live_map" />
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/menu_3">
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@android:drawable/ic_lock_power_off"
+            android:title="@string/nav_logout" />
+    </group>
+
+</menu>
