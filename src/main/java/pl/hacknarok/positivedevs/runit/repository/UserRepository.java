@@ -101,7 +101,6 @@ public class UserRepository {
         String statement = "UPDATE Users SET longitude=" + user.longitude + ",latitude= " + user.latitude + " WHERE token='" + user.token + "'";
         jdbc.execute(statement);
 
-        /*
         final String uri = "https://hacknarock.release.commandcentral.com";
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -115,7 +114,7 @@ public class UserRepository {
         HttpEntity<String> entity = new HttpEntity<>(jsonToSend, headers);
 
         restTemplate.exchange(uri, HttpMethod.PUT, entity, String.class);
-        */
+
 
         final String uri = "";
 
