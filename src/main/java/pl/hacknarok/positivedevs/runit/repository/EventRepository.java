@@ -26,7 +26,7 @@ public class EventRepository {
 
     private static final RowMapper<Event> eventMapper = new RowMapper<Event>() {
         public Event mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Event event = new Event(rs.getInt("ID"), rs.getString("name"),rs.getTimestamp("start_date"),rs.getString("place"));
+            Event event = new Event(rs.getInt("ID"), rs.getString("name"),rs.getString("description"),rs.getTimestamp("start_date"),rs.getString("place"));
             return event;
         }
 
@@ -34,6 +34,11 @@ public class EventRepository {
 
     public List<Event> getAllEvents(){
         return jdbc.query("SELECT * FROM Event",eventMapper);
+    }
+
+    public void addEvent(Event event){
+        String statement = "INSERT INTO Event VALUES('" + event.name + "','" + event.description + "','"+ event.start_date + "','" + event.place + "'," + event.latitude+ "," + event.longitude +  ")";
+        jdbc.execute(statement);
     }
 
     private static final RowMapper<Logo> logoMapper = new RowMapper<Logo>() {
@@ -50,8 +55,5 @@ public class EventRepository {
         return URL;
     }
 
-    public void addEvent(Event event){
-        String statement = "INSERT INTO Event VALUES('" + event.name + "','" + event.start_date + "','" + event.place + "'," + event.longitude + "," + event.latitude +  ")";
-        jdbc.execute(statement);
-    }
+
 }

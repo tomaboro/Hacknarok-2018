@@ -23,7 +23,7 @@ public class EventController {
     @Autowired
     private EventRepository events;
 
-    @RequestMapping(value = "getAll", method = RequestMethod.GET)
+    @RequestMapping(value = "getAll", method = RequestMethod.POST)
     public String getAllEvents() throws JSONException {
         List<Event> eventList = events.getAllEvents();
         JSONObject json = new JSONObject();
@@ -32,6 +32,7 @@ public class EventController {
             JSONObject tmp = new JSONObject();
             tmp.put("id",event.id);
             tmp.put("name",event.name);
+            tmp.put("description",event.description);
             tmp.put("place",event.place);
             tmp.put("start_date",event.start_date);
             arr.put(tmp);

@@ -3,6 +3,8 @@ package pl.hacknarok.positivedevs.runit.entity;
 public class Image {
     private String name;
     private String data;
+    private double latitude;
+    private double longitude;
 
     public Image(){
     }
@@ -23,6 +25,22 @@ public class Image {
     }
     public void setData(String data) {
         this.data = data;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     @Override

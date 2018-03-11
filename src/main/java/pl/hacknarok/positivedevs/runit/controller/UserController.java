@@ -1,5 +1,6 @@
 package pl.hacknarok.positivedevs.runit.controller;
 
+import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "updatePosition", method = RequestMethod.POST)
-    public void updatePosition(@RequestBody User user){
+    public void updatePosition(@RequestBody User user) throws JSONException {
         users.updatePosition(user);
     }
 
