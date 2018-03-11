@@ -6,6 +6,10 @@ public class User {
     public String password;
     public String token;
 
+    public double longitude;
+    public double latitude;
+    public int eventID;
+
     public User(){};
 
     public User(int id, String name, String password) {

@@ -3,6 +3,8 @@ package pl.hacknarok.positivedevs.runit.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 import pl.hacknarok.positivedevs.runit.entity.User;
@@ -19,10 +21,10 @@ public class UserController {
     @RequestMapping(value = "create", method = RequestMethod.PUT)
     public String createUser(@RequestBody User user){
         if(users.checkIfUserExists(user.name))
-            return "User with that username already exists!";
+            return "{\"content\":\"User with that username already exists!\"}";
         else {
             users.addUser(user.name,user.password);
-            return "User created successfully";
+            return "{\"content\":\"User created!\"}";
         }
     }
 
@@ -30,9 +32,9 @@ public class UserController {
     public String loginUser(@RequestBody User user){
         String uuid = users.login(user.name,user.password);
         if(uuid == null)
-            return null;
+            throw new ResourceNotFoundException();
         else {
-            return uuid;
+            return "{\"content\":\"" + uuid +"\"}";
         }
     }
 
@@ -40,5 +42,12 @@ public class UserController {
     public void logoutUser(@RequestBody User user){
         users.logout(user.token);
     }
+
+    @RequestMapping(value = "updatePosition", method = RequestMethod.POST)
+    public void updatePosition(@RequestBody User user){
+        users.updatePosition(user);
+    }
+
+
 
 }

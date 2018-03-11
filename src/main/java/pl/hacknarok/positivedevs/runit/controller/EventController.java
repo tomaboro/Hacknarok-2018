@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 import pl.hacknarok.positivedevs.runit.entity.Event;
+import pl.hacknarok.positivedevs.runit.entity.Logo;
 import pl.hacknarok.positivedevs.runit.entity.User;
 import pl.hacknarok.positivedevs.runit.repository.EventRepository;
 
@@ -22,7 +23,7 @@ public class EventController {
     @Autowired
     private EventRepository events;
 
-    @RequestMapping(value = "getAll", method = RequestMethod.POST)
+    @RequestMapping(value = "getAll", method = RequestMethod.GET)
     public String getAllEvents() throws JSONException {
         List<Event> eventList = events.getAllEvents();
         JSONObject json = new JSONObject();
@@ -37,6 +38,17 @@ public class EventController {
         }
         json.put("events",arr);
         return json.toString();
+    }
+
+    @RequestMapping(value = "getLogoURL", method = RequestMethod.POST)
+    public String getLogoURL(@RequestBody Logo logo) {
+        return events.getLogoURL(logo.id);
+    }
+
+    @RequestMapping(value = "addEvent", method = RequestMethod.POST)
+    public String getLogoURL(@RequestBody Event event) {
+        events.addEvent(event);
+        return "Event added";
     }
 }
 

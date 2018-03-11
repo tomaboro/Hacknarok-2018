@@ -42,7 +42,7 @@ public class UserRepository {
 
     private static final RowMapper<Event> eventMapper = new RowMapper<Event>() {
         public Event mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Event event = new Event(rs.getInt("ID"), rs.getString("name"),rs.getDate("start_date"),rs.getString("place"));
+            Event event = new Event(rs.getInt("ID"), rs.getString("name"),rs.getTimestamp("start_date"),rs.getString("place"));
             return event;
         }
 
@@ -68,7 +68,7 @@ public class UserRepository {
     }
 
     public void addUser(String name, String password){
-        String statement = "INSERT INTO Users VALUES('" + name + "','" + password + "',null)";
+        String statement = "INSERT INTO Users(name,password) VALUES('" + name + "','" + password + "')";
         jdbc.execute(statement);
         return;
     }
@@ -81,14 +81,19 @@ public class UserRepository {
         else
         {
             String uuid = UUID.randomUUID().toString();
-            statement = "UPDATE Users SET token='" + uuid + "'";
+            statement = "UPDATE Users SET token='" + uuid + "' WHERE name='" +name+"'";
             jdbc.execute(statement);
             return uuid;
         }
     }
 
     public void logout(String token){
-        String statement = "UPDATE Users SET  token='' WHERE token='" + token + "'";
+        String statement = "UPDATE Users SET token='' WHERE token='" + token + "'";
+        jdbc.execute(statement);
+    }
+
+    public void updatePosition(User user){
+        String statement = "UPDATE Users SET longitude="+ user.longitude + ",latitude= "+ user.latitude +" WHERE token='" + user.token + "'";
         jdbc.execute(statement);
     }
 }
